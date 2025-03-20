@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import type { Profile } from "~/types/profile";
 
 const profile = ref<Profile | null>(null);
@@ -23,25 +23,79 @@ const fetchProfile = async () => {
   }
 };
 
-onMounted(() => {
-  fetchProfile();
+// State
+const showTitle = ref(false);
+const moveTitle = ref(false);
+const showText = ref(false);
+const showDescription = ref(false);
+
+onMounted(async () => {
+  await fetchProfile();
+  await nextTick();
+
+  setTimeout(() => (showTitle.value = true), 500);
+  setTimeout(() => (moveTitle.value = true), 1500);
+  setTimeout(() => (showText.value = true), 2000);
+  setTimeout(() => (showDescription.value = true), 2500);
 });
 </script>
 
 <template>
   <div
     v-if="profile"
-    class="h-[calc(100vh-40px)] flex-1 flex flex-col items-center justify-center"
+    class="h-[calc(100vh-40px)] flex-1 flex flex-col items-center justify-center relative"
   >
-    <div class="flex justify-between items-center gap-4">
-      <p class="text-start text-base">Fullstack //<br />Developer</p>
-      <h1 class="text-8xl text-center font-bold text-red-500 tracking-widest">
-        {{ profile.name }}
-      </h1>
-      <p class="text-end text-base">// Jakarta<br />Indonesia</p>
+    <div class="flex justify-between items-center gap-4 w-full px-8">
+      <Transition name="fade">
+        <div
+          v-if="showTitle"
+          :class="{
+            'translate-x-[-30px] opacity-100': moveTitle,
+            'opacity-0': !showTitle,
+          }"
+          class="flex items-center gap-4 transition-all duration-1000 ease-in-out"
+        >
+          <NuxtImg
+            :src="profile.avatar"
+            alt="Avatar"
+            class="w-16 h-16 rounded-full"
+          />
+          <h1
+            class="text-8xl text-center font-bold text-red-500 tracking-widest"
+          >
+            {{ profile.name }}
+          </h1>
+        </div>
+      </Transition>
+
+      <Transition name="fade">
+        <p v-if="showText" class="text-start text-base">
+          // {{ profile.job_title }}
+        </p>
+      </Transition>
+
+      <Transition name="fade">
+        <p v-if="showText" class="text-end text-base">
+          // {{ profile.location }}
+        </p>
+      </Transition>
     </div>
-    <div class="justify-end text-center">
-      <p>{{ profile.summary }}</p>
-    </div>
+
+    <Transition name="fade">
+      <div v-if="showDescription" class="absolute bottom-8 text-center">
+        <p>{{ profile.summary }}</p>
+      </div>
+    </Transition>
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease-in-out;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
