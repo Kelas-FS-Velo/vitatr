@@ -45,7 +45,7 @@ onMounted(async () => {
     v-if="profile"
     class="h-[calc(100vh-56px)] flex-1 flex flex-col items-center justify-center relative"
   >
-    <div class="flex items-center gap-4 w-full px-8">
+    <div class="flex justify-center items-center gap-4 w-full px-8">
       <Transition name="fade">
         <div
           v-if="showTitle"
@@ -90,7 +90,7 @@ onMounted(async () => {
     <Transition name="fade">
       <div
         v-if="showDescription"
-        class="absolute bottom-8 text-center text-slate-400 text-lg"
+        class="absolute bottom-8 text-center text-slate-500 text-lg"
       >
         <p>{{ profile.summary }}</p>
       </div>
