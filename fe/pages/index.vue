@@ -45,7 +45,7 @@ onMounted(async () => {
     v-if="profile"
     class="h-[calc(100vh-56px)] flex-1 flex flex-col items-center justify-center relative"
   >
-    <div class="flex justify-between items-center gap-4 w-full px-8">
+    <div class="flex items-center gap-4 w-full px-8">
       <Transition name="fade">
         <div
           v-if="showTitle"
@@ -69,20 +69,29 @@ onMounted(async () => {
       </Transition>
 
       <Transition name="fade">
-        <p v-if="showText" class="text-start text-base">
+        <p
+          v-if="showText"
+          class="text-start font-semibold text-slate-700 text-xl"
+        >
           // {{ profile.job_title }}
         </p>
       </Transition>
 
       <Transition name="fade">
-        <p v-if="showText" class="text-end text-base">
+        <p
+          v-if="showText"
+          class="text-end font-semibold text-slate-700 text-xl"
+        >
           // {{ profile.location }}
         </p>
       </Transition>
     </div>
 
     <Transition name="fade">
-      <div v-if="showDescription" class="absolute bottom-8 text-center">
+      <div
+        v-if="showDescription"
+        class="absolute bottom-8 text-center text-slate-400 text-lg"
+      >
         <p>{{ profile.summary }}</p>
       </div>
     </Transition>
