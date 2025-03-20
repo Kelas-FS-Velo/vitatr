@@ -8,5 +8,5 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "@nuxtjs/icon", "@nuxtjs/ui"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/image"],
 });
