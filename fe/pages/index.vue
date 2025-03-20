@@ -43,7 +43,7 @@ onMounted(async () => {
 <template>
   <div
     v-if="profile"
-    class="h-[calc(100vh-40px)] flex-1 flex flex-col items-center justify-center relative"
+    class="h-[calc(100vh-56px)] flex-1 flex flex-col items-center justify-center relative"
   >
     <div class="flex justify-between items-center gap-4 w-full px-8">
       <Transition name="fade">
